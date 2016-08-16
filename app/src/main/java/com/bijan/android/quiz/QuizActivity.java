@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
 
+    //The two buttons the user can click
     private Button mTrueButton;
     private Button mFalseButton;
 
@@ -16,6 +17,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        //Setting up listeners for onClick by user
         mTrueButton = (Button)findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
             @Override
