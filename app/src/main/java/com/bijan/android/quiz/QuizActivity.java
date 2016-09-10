@@ -29,6 +29,15 @@ public class QuizActivity extends AppCompatActivity {
     // Declare and initialize a current index for the Question array to be 0, 'mCurrentIndex'
     private int mCurrentIndex = 0;
 
+    /**
+     * updateQuestion:  Updates myQuestionTextView's text to the question at the current index in mQuestionBank.
+     *
+     */
+    private void updateQuestion() {
+        int question = mQuestionBank[mCurrentIndex].getTextResId();
+        mQuestionTextView.setText(question);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +45,6 @@ public class QuizActivity extends AppCompatActivity {
 
         // Obtaining reference for the TextView
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-
-        //setting mQuestionTextView's text to the question at the current index
-        int question = mQuestionBank[mCurrentIndex].getTextResId();
-        mQuestionTextView.setText(question);
 
         //Setting up listeners for onClick events triggered by the user after obtaining references
         mTrueButton = (Button)findViewById(R.id.true_button);
@@ -67,9 +72,10 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
-                int question = mQuestionBank[mCurrentIndex].getTextResId();
-                mQuestionTextView.setText(question);
+                updateQuestion();
             }
         });
+
+        updateQuestion();       // Call method to display the first question in the mQuestionBank.
     }
 }
