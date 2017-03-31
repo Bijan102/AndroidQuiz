@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,8 +14,8 @@ public class QuizActivity extends AppCompatActivity {
     //The two buttons the user can click
     private Button mTrueButton;
     private Button mFalseButton;
-    private Button mNextButton;     // A next button to go on to the next question
-    private Button mPreviousButton;
+    private ImageButton mNextButton;     // A next button to go on to the next question
+    private ImageButton mPreviousButton;
 
     // A TextView for displaying a question
     private TextView mQuestionTextView;
@@ -83,7 +84,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mNextButton = (Button)findViewById(R.id.next_button);
+        mNextButton = (ImageButton)findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +93,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mPreviousButton = (Button) findViewById(R.id.prev_button);
+        mPreviousButton = (ImageButton) findViewById(R.id.prev_button);
         mPreviousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
