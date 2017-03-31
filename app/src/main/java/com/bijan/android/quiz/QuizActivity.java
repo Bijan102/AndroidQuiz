@@ -1,7 +1,8 @@
 package com.bijan.android.quiz;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ public class QuizActivity extends AppCompatActivity {
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;     // A next button to go on to the next question
+    private Button mPreviousButton;
 
     // A TextView for displaying a question
     private TextView mQuestionTextView;
@@ -51,7 +53,9 @@ public class QuizActivity extends AppCompatActivity {
 
         messageResId = (userPressedTrue == answerIsTrue) ? R.string.correct_toast : R.string.incorrect_toast;
 
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.show();
     }
 
     @Override
@@ -87,6 +91,27 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+
+        mPreviousButton = (Button) findViewById(R.id.prev_button);
+        mPreviousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentIndex != 0)
+                    mCurrentIndex = (mCurrentIndex - 1) % mQuestionBank.length;
+                else mCurrentIndex = mQuestionBank.length - 1;
+                updateQuestion();
+            }
+        });
+
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                updateQuestion();
+            }
+        });
+
+
 
         updateQuestion();       // Call method to display the first question in the mQuestionBank.
     }
