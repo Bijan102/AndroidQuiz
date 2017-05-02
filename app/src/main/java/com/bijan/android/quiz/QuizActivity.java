@@ -1,5 +1,6 @@
 package com.bijan.android.quiz;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -20,6 +21,9 @@ public class QuizActivity extends AppCompatActivity {
 
     // Create a TAG to use for debugging program
     private static final String TAG = "QuizActivity";
+
+    // Create a key, KEY_INDEX, to use as the key to be stored in the bundle
+    private static final String KEY_INDEX = "index";
 
     // A TextView for displaying a question
     private TextView mQuestionTextView;
@@ -74,6 +78,32 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     /**
+     * Called after {@link #onStop} when the current activity is being
+     * re-displayed to the user (the user has navigated back to it).  It will
+     * be followed by {@link #onStart} and then {@link #onResume}.
+     * <p>
+     * <p>For activities that are using raw objects (instead of
+     * creating them through
+     * {@link #managedQuery(Uri, String[], String, String[], String)},
+     * this is usually the place
+     * where the cursor should be requeried (because you had deactivated it in
+     * {@link #onStop}.
+     * <p>
+     * <p><em>Derived classes must call through to the super class's
+     * implementation of this method.  If they do not, an exception will be
+     * thrown.</em></p>
+     *
+     * @see #onStop
+     * @see #onStart
+     * @see #onResume
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "onRestart() called");
+    }
+
+    /**
      * Dispatch onResume() to fragments.  Note that for better inter-operation
      * with older versions of the platform, at the point of this call the
      * fragments attached to the activity are <em>not</em> resumed.  This means
@@ -98,6 +128,13 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG, "onSavedInstanceState");
+        outState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop() called");
@@ -115,9 +152,10 @@ public class QuizActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate(Bundle) called");
 
-
-
         setContentView(R.layout.activity_quiz);
+
+        if (savedInstanceState != null)
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
 
         // Obtaining reference for the TextView
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
